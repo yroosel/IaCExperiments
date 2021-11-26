@@ -1,0 +1,17 @@
+---
+- name: Verify Apache Installation
+  hosts: webservers
+  vars:
+    http_port: 8081
+    max_clients: 200
+  remote_user: root
+  tasks:
+    - name: Ensure apache is at the latest version
+      apt:
+        name: apache2
+        state: latest
+
+    - name: Ensure apache is running
+      ansible.builtin.service:
+        name: apache2
+        state: started

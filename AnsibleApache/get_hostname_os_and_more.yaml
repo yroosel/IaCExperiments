@@ -1,0 +1,26 @@
+---
+- name: Report Hostname and Operating System Details
+  hosts: servers
+
+  tasks:
+    - name: "Get Hostname from Device"
+      debug: 
+        msg: "{{ansible_hostname}}"
+
+    - name: "Operating System"
+      debug: msg="{{ansible_distribution}}"
+
+- name: Report Network Details of servers
+  hosts: servers
+
+  tasks:
+
+    - name: Default IPv4 Interface
+      debug: msg="{{ansible_default_ipv4.interface}}"
+
+    - name: "Retrieve network routes"
+      command: "netstat -rn"
+      register: routes
+
+    - name: "Network Routes Installed"
+      debug: msg="{{routes}}"

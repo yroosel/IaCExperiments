@@ -1,0 +1,16 @@
+---
+- name: INSTALL WEBSERVER ON LINUX SYSTEM
+  hosts: webservers
+  become: yes
+  tasks:
+    - name: INSTALL APACHE2
+      apt: name=apache2 update_cache=yes state=latest
+ 
+    - name: ENABLED MOD_REWRITE
+      apache2_module: name=rewrite state=present
+      notify:
+        - RESTART APACHE2
+ 
+  handlers:
+    - name: RESTART APACHE2
+      service: name=apache2 state=restarted 

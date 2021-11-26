@@ -1,0 +1,9 @@
+--- 
+- hosts: webservers
+  gather_facts: true
+  become: true
+  tasks: 
+    - apt:
+        name: apache2
+        autoremove: yes
+        state: absent
