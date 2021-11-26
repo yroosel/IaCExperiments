@@ -1,0 +1,16 @@
+---
+- name: INTERFACE ADDRESSING 
+  hosts: sandbox
+  gather_facts: false
+  connection: local
+
+  tasks: 
+  - name: run show ip int brief
+    ios_command:
+      commands: show ip interface brief
+    register: interfaces
+
+  - name: display interfaces
+    debug:
+      var: interfaces["stdout_lines"][0]
+

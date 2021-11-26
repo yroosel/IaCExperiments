@@ -1,0 +1,11 @@
+---
+- name: REMOVE LOOPBACK INTERFACE
+  hosts: csr
+  gather_facts: no
+  connection: local
+
+  tasks:
+  - name: Delete loopback
+    ios_interface:
+      name: Loopback10111
+      state: absent

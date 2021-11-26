@@ -1,0 +1,15 @@
+---
+- name: CONFIGURE LOGBUFFER 
+  hosts: csr
+  gather_facts: False
+  connection: local
+  become: yes
+  become_method: enable
+
+  tasks:
+  - name: Configure log buffer
+    ios_logging:
+      dest: buffered
+      level: informational
+      state: present
+
