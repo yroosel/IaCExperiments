@@ -1,0 +1,147 @@
+2021-11-29T15:36:45: %EASYPY-INFO: Starting job run: basic_example_job
+2021-11-29T15:36:45: %EASYPY-INFO: Runinfo directory: /home/devasc/.pyats/runinfo/basic_example_job.2021Nov29_15:36:44.920377
+2021-11-29T15:36:45: %EASYPY-INFO: --------------------------------------------------------------------------------
+2021-11-29T15:36:48: %ATS-INFO: Checking all devices are up and ready is disabled, '--check-all-devices-up' must be set to True in case of pyats runs or '-check_all_devices_up' set to True in case of legacy easypy runs
+2021-11-29T15:36:48: %EASYPY-INFO: Starting task execution: Task-1
+2021-11-29T15:36:48: %EASYPY-INFO:     test harness = pyats.aetest
+2021-11-29T15:36:48: %EASYPY-INFO:     testscript   = /home/devasc/labs/devnet-src/pyats/csr1kv/examples/basic/basic_example_script.py
+2021-11-29T15:36:48: %AETEST-INFO: +------------------------------------------------------------------------------+
+2021-11-29T15:36:48: %AETEST-INFO: |                            Starting common setup                             |
+2021-11-29T15:36:48: %AETEST-INFO: +------------------------------------------------------------------------------+
+2021-11-29T15:36:48: %AETEST-INFO: +------------------------------------------------------------------------------+
+2021-11-29T15:36:48: %AETEST-INFO: |                   Starting subsection sample_subsection_1                    |
+2021-11-29T15:36:48: %AETEST-INFO: +------------------------------------------------------------------------------+
+2021-11-29T15:36:48: %SCRIPT-INFO: Aetest Common Setup 
+2021-11-29T15:36:48: %AETEST-INFO: The result of subsection sample_subsection_1 is => PASSED
+2021-11-29T15:36:48: %AETEST-INFO: +------------------------------------------------------------------------------+
+2021-11-29T15:36:48: %AETEST-INFO: |                   Starting subsection sample_subsection_2                    |
+2021-11-29T15:36:48: %AETEST-INFO: +------------------------------------------------------------------------------+
+2021-11-29T15:36:48: %SCRIPT-INFO: Inside subsection sample_subsection_2
+2021-11-29T15:36:48: %SCRIPT-INFO: Inside class common_setup
+2021-11-29T15:36:48: %AETEST-INFO: The result of subsection sample_subsection_2 is => PASSED
+2021-11-29T15:36:48: %AETEST-INFO: The result of common setup is => PASSED
+2021-11-29T15:36:48: %AETEST-INFO: +------------------------------------------------------------------------------+
+2021-11-29T15:36:48: %AETEST-INFO: |                           Starting testcase tc_one                           |
+2021-11-29T15:36:48: %AETEST-INFO: +------------------------------------------------------------------------------+
+2021-11-29T15:36:49: %AETEST-INFO: +------------------------------------------------------------------------------+
+2021-11-29T15:36:49: %AETEST-INFO: |                      Starting section prepare_testcase                       |
+2021-11-29T15:36:49: %AETEST-INFO: +------------------------------------------------------------------------------+
+2021-11-29T15:36:49: %SCRIPT-INFO: Preparing the test
+2021-11-29T15:36:49: %SCRIPT-INFO: section prepare_testcase
+2021-11-29T15:36:49: %AETEST-INFO: The result of section prepare_testcase is => PASSED
+2021-11-29T15:36:49: %AETEST-INFO: +------------------------------------------------------------------------------+
+2021-11-29T15:36:49: %AETEST-INFO: |                        Starting section simple_test_1                        |
+2021-11-29T15:36:49: %AETEST-INFO: +------------------------------------------------------------------------------+
+2021-11-29T15:36:49: %SCRIPT-INFO: First test section 
+2021-11-29T15:36:49: %AETEST-INFO: The result of section simple_test_1 is => PASSED
+2021-11-29T15:36:49: %AETEST-INFO: +------------------------------------------------------------------------------+
+2021-11-29T15:36:49: %AETEST-INFO: |                        Starting section simple_test_2                        |
+2021-11-29T15:36:49: %AETEST-INFO: +------------------------------------------------------------------------------+
+2021-11-29T15:36:49: %SCRIPT-INFO: Second test section 
+2021-11-29T15:36:49: %AETEST-INFO: The result of section simple_test_2 is => PASSED
+2021-11-29T15:36:49: %AETEST-INFO: +------------------------------------------------------------------------------+
+2021-11-29T15:36:49: %AETEST-INFO: |                       Starting section clean_testcase                        |
+2021-11-29T15:36:49: %AETEST-INFO: +------------------------------------------------------------------------------+
+2021-11-29T15:36:49: %SCRIPT-INFO: Pass testcase cleanup
+2021-11-29T15:36:49: %AETEST-INFO: The result of section clean_testcase is => PASSED
+2021-11-29T15:36:49: %AETEST-INFO: The result of testcase tc_one is => PASSED
+2021-11-29T15:36:49: %AETEST-INFO: +------------------------------------------------------------------------------+
+2021-11-29T15:36:49: %AETEST-INFO: |                           Starting testcase tc_two                           |
+2021-11-29T15:36:49: %AETEST-INFO: +------------------------------------------------------------------------------+
+2021-11-29T15:36:49: %AETEST-INFO: +------------------------------------------------------------------------------+
+2021-11-29T15:36:49: %AETEST-INFO: |                        Starting section simple_test_1                        |
+2021-11-29T15:36:49: %AETEST-INFO: +------------------------------------------------------------------------------+
+2021-11-29T15:36:49: %SCRIPT-INFO: First test section 
+2021-11-29T15:36:49: %AETEST-ERROR: [31mFailed reason: This is an intentional failure[0m[39m
+2021-11-29T15:36:49: %AETEST-INFO: The result of section simple_test_1 is => FAILED
+2021-11-29T15:36:49: %AETEST-INFO: +------------------------------------------------------------------------------+
+2021-11-29T15:36:49: %AETEST-INFO: |                        Starting section simple_test_2                        |
+2021-11-29T15:36:49: %AETEST-INFO: +------------------------------------------------------------------------------+
+2021-11-29T15:36:49: %SCRIPT-INFO: Second test section 
+2021-11-29T15:36:49: %AETEST-INFO: The result of section simple_test_2 is => PASSED
+2021-11-29T15:36:49: %AETEST-INFO: +------------------------------------------------------------------------------+
+2021-11-29T15:36:49: %AETEST-INFO: |                       Starting section clean_testcase                        |
+2021-11-29T15:36:49: %AETEST-INFO: +------------------------------------------------------------------------------+
+2021-11-29T15:36:49: %SCRIPT-INFO: Pass testcase cleanup
+2021-11-29T15:36:49: %AETEST-INFO: The result of section clean_testcase is => PASSED
+2021-11-29T15:36:49: %AETEST-INFO: The result of testcase tc_two is => FAILED
+2021-11-29T15:36:50: %AETEST-INFO: +------------------------------------------------------------------------------+
+2021-11-29T15:36:50: %AETEST-INFO: |                           Starting common cleanup                            |
+2021-11-29T15:36:50: %AETEST-INFO: +------------------------------------------------------------------------------+
+2021-11-29T15:36:50: %AETEST-INFO: +------------------------------------------------------------------------------+
+2021-11-29T15:36:50: %AETEST-INFO: |                     Starting subsection clean_everything                     |
+2021-11-29T15:36:50: %AETEST-INFO: +------------------------------------------------------------------------------+
+2021-11-29T15:36:50: %SCRIPT-INFO: Aetest Common Cleanup 
+2021-11-29T15:36:50: %AETEST-INFO: The result of subsection clean_everything is => PASSED
+2021-11-29T15:36:50: %AETEST-INFO: The result of common cleanup is => PASSED
+2021-11-29T15:36:50: %CONTRIB-INFO: WebEx Token not given as argument or in config. No WebEx notification will be sent
+2021-11-29T15:36:50: %EASYPY-INFO: --------------------------------------------------------------------------------
+2021-11-29T15:36:50: %EASYPY-INFO: Job finished. Wrapping up...
+2021-11-29T15:36:51: %EASYPY-INFO: Creating archive file: /home/devasc/.pyats/archive/21-Nov/basic_example_job.2021Nov29_15:36:44.920377.zip
+2021-11-29T15:36:51: %EASYPY-INFO: +------------------------------------------------------------------------------+
+2021-11-29T15:36:51: %EASYPY-INFO: |                                Easypy Report                                 |
+2021-11-29T15:36:51: %EASYPY-INFO: +------------------------------------------------------------------------------+
+2021-11-29T15:36:51: %EASYPY-INFO: pyATS Instance   : /home/devasc/labs/devnet-src/pyats/csr1kv
+2021-11-29T15:36:51: %EASYPY-INFO: Python Version   : cpython-3.8.2 (64bit)
+2021-11-29T15:36:51: %EASYPY-INFO: CLI Arguments    : /home/devasc/labs/devnet-src/pyats/csr1kv/bin/pyats run job examples/basic/basic_example_job.py
+2021-11-29T15:36:51: %EASYPY-INFO: User             : devasc
+2021-11-29T15:36:51: %EASYPY-INFO: Host Server      : labvm
+2021-11-29T15:36:51: %EASYPY-INFO: Host OS Version  : Ubuntu 20.04 focal (x86_64)
+2021-11-29T15:36:51: %EASYPY-INFO: 
+2021-11-29T15:36:51: %EASYPY-INFO: Job Information
+2021-11-29T15:36:51: %EASYPY-INFO:     Name         : basic_example_job
+2021-11-29T15:36:51: %EASYPY-INFO:     Start time   : 2021-11-29 15:36:48.204322
+2021-11-29T15:36:51: %EASYPY-INFO:     Stop time    : 2021-11-29 15:36:50.237363
+2021-11-29T15:36:51: %EASYPY-INFO:     Elapsed time : 2.033041
+2021-11-29T15:36:51: %EASYPY-INFO:     Archive      : /home/devasc/.pyats/archive/21-Nov/basic_example_job.2021Nov29_15:36:44.920377.zip
+2021-11-29T15:36:51: %EASYPY-INFO: 
+2021-11-29T15:36:51: %EASYPY-INFO: Total Tasks    : 1 
+2021-11-29T15:36:51: %EASYPY-INFO: 
+2021-11-29T15:36:51: %EASYPY-INFO: Overall Stats
+2021-11-29T15:36:51: %EASYPY-INFO:     Passed     : 3
+2021-11-29T15:36:51: %EASYPY-INFO:     Passx      : 0
+2021-11-29T15:36:51: %EASYPY-INFO:     Failed     : 1
+2021-11-29T15:36:51: %EASYPY-INFO:     Aborted    : 0
+2021-11-29T15:36:51: %EASYPY-INFO:     Blocked    : 0
+2021-11-29T15:36:51: %EASYPY-INFO:     Skipped    : 0
+2021-11-29T15:36:51: %EASYPY-INFO:     Errored    : 0
+2021-11-29T15:36:51: %EASYPY-INFO: 
+2021-11-29T15:36:51: %EASYPY-INFO:     TOTAL      : 4
+2021-11-29T15:36:51: %EASYPY-INFO: 
+2021-11-29T15:36:51: %EASYPY-INFO: Success Rate   : 75.00 %
+2021-11-29T15:36:51: %EASYPY-INFO: 
+2021-11-29T15:36:51: %EASYPY-INFO: +------------------------------------------------------------------------------+
+2021-11-29T15:36:51: %EASYPY-INFO: |                             Task Result Summary                              |
+2021-11-29T15:36:51: %EASYPY-INFO: +------------------------------------------------------------------------------+
+2021-11-29T15:36:51: %EASYPY-INFO: Task-1: basic_example_script.common_setup                                 PASSED
+2021-11-29T15:36:51: %EASYPY-INFO: Task-1: basic_example_script.tc_one                                       PASSED
+2021-11-29T15:36:51: %EASYPY-INFO: Task-1: basic_example_script.tc_two                                       FAILED
+2021-11-29T15:36:51: %EASYPY-INFO: Task-1: basic_example_script.common_cleanup                               PASSED
+2021-11-29T15:36:51: %EASYPY-INFO: 
+2021-11-29T15:36:51: %EASYPY-INFO: +------------------------------------------------------------------------------+
+2021-11-29T15:36:51: %EASYPY-INFO: |                             Task Result Details                              |
+2021-11-29T15:36:51: %EASYPY-INFO: +------------------------------------------------------------------------------+
+2021-11-29T15:36:51: %EASYPY-INFO: Task-1: basic_example_script
+2021-11-29T15:36:51: %EASYPY-INFO: |-- common_setup                                                          PASSED
+2021-11-29T15:36:51: %EASYPY-INFO: |   |-- sample_subsection_1                                               PASSED
+2021-11-29T15:36:51: %EASYPY-INFO: |   `-- sample_subsection_2                                               PASSED
+2021-11-29T15:36:51: %EASYPY-INFO: |-- tc_one                                                                PASSED
+2021-11-29T15:36:51: %EASYPY-INFO: |   |-- prepare_testcase                                                  PASSED
+2021-11-29T15:36:51: %EASYPY-INFO: |   |-- simple_test_1                                                     PASSED
+2021-11-29T15:36:51: %EASYPY-INFO: |   |-- simple_test_2                                                     PASSED
+2021-11-29T15:36:51: %EASYPY-INFO: |   `-- clean_testcase                                                    PASSED
+2021-11-29T15:36:51: %EASYPY-INFO: |-- tc_two                                                                FAILED
+2021-11-29T15:36:51: %EASYPY-INFO: |   |-- simple_test_1                                                     FAILED
+2021-11-29T15:36:51: %EASYPY-INFO: |   |-- simple_test_2                                                     PASSED
+2021-11-29T15:36:51: %EASYPY-INFO: |   `-- clean_testcase                                                    PASSED
+2021-11-29T15:36:51: %EASYPY-INFO: `-- common_cleanup                                                        PASSED
+2021-11-29T15:36:51: %EASYPY-INFO:     `-- clean_everything                                                  PASSED
+2021-11-29T15:36:51: %EASYPY-INFO: Sending report email...
+2021-11-29T15:36:51: %EASYPY-INFO: Missing SMTP server configuration, or failed to reach/authenticate/send mail. Result notification email failed to send.
+2021-11-29T15:36:51: %EASYPY-INFO: Done!
+
+Pro Tip
+-------
+   Try the following command to view your logs:
+       pyats logs view
+
