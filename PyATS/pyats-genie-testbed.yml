@@ -1,0 +1,14 @@
+devices:
+  CSR1kv:
+    connections:
+      cli:
+        ip: 192.168.56.10x
+        protocol: ssh
+    credentials:
+      default:
+        password: '%ENC{w5PDosOUw5fDosKQwpbCmMKH}'
+        username: GETUSERNAME
+      enable:
+        password: '%ENC{w5PDosOUw5fDosKQwpbCmMKH}'
+    os: iosxe
+    type: iosxe
