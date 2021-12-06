@@ -1,21 +1,21 @@
 #! /bin/bash
-IPADDRESS=192.168.56.107
-ping -c 5 $IPADDRESS 
+IP_HOST=192.168.56.107
+ping -c 5 $IP_HOST 
+INTERFACE=GigabitEthernet1
 USERNAME=cisco
 PASSWORD=cisco123!
-STATUS_CODE=$(curl -ks \
+status_code=$(curl -ks \
 -w "%{http_code}" \
 -o /dev/null \
 -u "$USERNAME:$PASSWORD" \
 -H "Accept: application/yang-data+json" \
-"https://$IPADDRESS/restconf/data/ietf-interfaces:interfaces/interface=GigabitEthernet1")
+"https://$IP_HOST/restconf/data/ietf-interfaces:interfaces/interface=$INTERFACE")
 
-echo $STATUS_CODE
+echo $status_code
 
-if [ $STATUS_CODE -eq 200 ]
+if [ $status_code -eq 200 ]
 then 
-   echo "OK -- interface is up -- return code: 200"
+   echo "Yes - interface is up - returning status code: 200"
 else
-   echo "ERROR -- device unreachable or interface is down -- return code: $STATUS_CODE"
+   echo "No - interface is down - returning status code: $status_code"
 fi
-
