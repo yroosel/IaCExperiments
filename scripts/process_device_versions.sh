@@ -1,5 +1,5 @@
 #!/bin/bash
-# Before running this script it is necessary to create a subfolder with config files
+# Before running this script it is necessary to create a subfolder with show verions output files
 # Task: this script will use output from "show version"
 echo "START DEVICE IOS VERSION  CHECK"
 REQUIRED_IOS="16.09.05"
