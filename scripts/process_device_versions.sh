@@ -1,7 +1,7 @@
 #!/bin/bash
 # Before running this script it is necessary to create a subfolder with running config files
 # Task: this script to use output from  "show version"
-echo "START DEVICE IOS VERSION  CHECK"
+echo "START DEVICE IOS VERSION CHECK"
 REQUIRED_IOS="16.09.05"
 VERSION_SEARCH_TEXT="Cisco IOS XE Software, Version"
 echo REQUIRED IOS: $REQUIRED_IOS
