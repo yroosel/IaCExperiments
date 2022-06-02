@@ -1,0 +1,16 @@
+---
+
+- name: ACCESS-CONTROL-LISTS
+  hosts: routers
+  gather_facts: false
+  connection: network_cli
+
+  tasks:
+  - name: Configure ACL-NTP
+    ios_config:
+      lines:
+        - permit 81.19.96.148
+        - permit 130.206.3.166
+        - deny any
+      parents:
+        - ip access-list standard ACL-NTP
