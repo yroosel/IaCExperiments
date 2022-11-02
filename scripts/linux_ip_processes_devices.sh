@@ -16,7 +16,7 @@ echo ---------
 # sudo lshw -short
 # echo ---------
 echo Active Processes
-ps -ef | grep usr
+ps -ef | grep " /usr/"
 echo ---------
 echo CPU
 lscpu
