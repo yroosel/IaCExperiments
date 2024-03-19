@@ -12,6 +12,7 @@
   tasks:
     # Task to create the loopback interface
     - name: Creating loopback 
+<<<<<<< HEAD
       ios_interface:  # Module to manage layer 2 and layer 3 interfaces on IOS devices
         name: Loopback1511  # Name of the loopback interface to be created
         enabled: True  # Specifies whether the interface is administratively enabled
@@ -22,3 +23,13 @@
       ios_l3_interface:  # Module to manage layer 3 interfaces on IOS devices
         name: Loopback1511  # Name of the loopback interface to which IP will be assigned
         ipv4: 10.0.15.11/32  # IPv4 address and subnet mask in CIDR notation
+=======
+      ios_interface:
+        name: Loopback100
+        enabled: True
+        description: Loopback interface 100 created with Ansible
+    - name: Assigning IP to loopback
+      ios_l3_interface:
+        name: Loopback100
+        ipv4: 10.10.10.100/32
+>>>>>>> b3782bacdfe0195cdb4eee557f759665b6935edb
