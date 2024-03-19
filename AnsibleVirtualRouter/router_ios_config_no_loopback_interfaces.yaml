@@ -1,0 +1,26 @@
+---
+- name: Configure loopback interface
+  hosts: CSR1kv
+  gather_facts: no
+  connection: network_cli
+  tasks:
+    - name: Remove loopback interface
+      ios_config:
+        lines:
+          - no interface Loopback111
+      register: config_result
+      ignore_errors: yes
+
+    - name: Display result of configuration change
+      debug:
+        var: config_result
+
+    - name: Verify loopback interfaces
+      ios_command:
+        commands:
+          - show ip interface brief | include Loopback
+      register: result
+
+    - name: Display result
+      debug:
+        var: result.stdout_lines

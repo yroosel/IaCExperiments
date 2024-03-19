@@ -1,0 +1,15 @@
+---
+- name: Gather information about IP interfaces on CSR1Kv
+  hosts: routers
+  gather_facts: no
+  connection: network_cli
+  tasks:
+    - name: Gather information about IP interfaces
+      ios_command:
+        commands:
+          - show ip interface brief
+      register: interface_info
+
+    - name: Display IP interface information
+      debug:
+        var: interface_info.stdout_lines

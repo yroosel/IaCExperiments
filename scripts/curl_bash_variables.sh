@@ -1,5 +1,5 @@
 #! /bin/bash
-IP_HOST=192.168.56.107
+IP_HOST=192.168.56.101
 ping -c 5 $IP_HOST 
 INTERFACE=GigabitEthernet1
 USERNAME=cisco

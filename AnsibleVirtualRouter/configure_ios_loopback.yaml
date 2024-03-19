@@ -1,18 +1,24 @@
 ---
-- name: CREATE LOOPBACK INTERFACE
-  hosts: csr
-  gather_facts: False
-  connection: local
-  become: yes
-  become_method: enable
+# Playbook to create a loopback interface and assign an IP address to it on CSR1kv router
+
+# Playbook metadata
+- name: CREATE LOOPBACK INTERFACE  # Descriptive name of the playbook
+  hosts: CSR1kv  # Target hosts on which the tasks will be executed
+  gather_facts: False  # Skips gathering facts about the hosts
+  connection: local  # Establishes a local connection to the Ansible controller
+  become: yes  # Enables privilege escalation for tasks requiring root privileges
+  become_method: enable  # Specifies the method to become privileged user
 
   tasks:
+    # Task to create the loopback interface
     - name: Creating loopback 
-      ios_interface:
-        name: Loopback100
-        enabled: True
-        description: Loopback interface 100 created with Ansible
+      ios_interface:  # Module to manage layer 2 and layer 3 interfaces on IOS devices
+        name: Loopback1511  # Name of the loopback interface to be created
+        enabled: True  # Specifies whether the interface is administratively enabled
+        description: Loopback interface 11 created with Ansible  # Description of the interface
+
+    # Task to assign an IP address to the loopback interface
     - name: Assign IP to loopback
-      ios_l3_interface:
-        name: Loopback100
-        ipv4: 10.10.10.100/32
+      ios_l3_interface:  # Module to manage layer 3 interfaces on IOS devices
+        name: Loopback1511  # Name of the loopback interface to which IP will be assigned
+        ipv4: 10.0.15.11/32  # IPv4 address and subnet mask in CIDR notation

@@ -1,0 +1,14 @@
+---
+- name: Gather information about IP interfaces on CSR1Kv
+  hosts: routers
+  gather_facts: yes
+  connection: network_cli
+  tasks:
+    - name: Gather IOS facts
+      ios_facts:
+      register: ios_facts_result
+
+    - name: Display IP interface information
+      debug:
+        var: ios_facts_result.ansible_facts.ansible_net_interfaces
+        

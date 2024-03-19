@@ -1,0 +1,24 @@
+---
+- name: Configure loopback interface
+  hosts: CSR1kv
+  gather_facts: no
+  connection: network_cli
+  tasks:
+    - name: Add loopback interface
+      ios_command:
+        commands:
+          - configure terminal
+          - interface Loopback 101
+          - ip address 10.101.0.2 255.255.255.0
+          - end
+
+    - name: Verify loopback interface
+      ios_command:
+        commands:
+          - show ip interface brief | include Loopback
+      register: result
+
+    - name: Display result
+      debug:
+        var: result.stdout_lines
+      

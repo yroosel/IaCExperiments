@@ -1,0 +1,16 @@
+---
+- name: Configure loopback interface on CSR1Kv
+  hosts: CSR1kv
+  gather_facts: no
+  connection: network_cli
+  tasks:
+    - name: Add loopback interface
+      ios_config:
+        lines:
+          - interface Loopback12
+          - ip address 10.12.0.2 255.255.255.0
+      register: result
+
+    - name: Display result
+      debug:
+        var: result

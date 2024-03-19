@@ -2,7 +2,7 @@ devices:
   CSR1kv:
     connections:
       cli:
-        ip: 192.168.56.10x
+        ip: 192.168.56.101
         protocol: ssh
     credentials:
       default:
