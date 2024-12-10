@@ -2,7 +2,7 @@
 - name: Gather information about IP interfaces on CSR1Kv
   hosts: routers
   gather_facts: no
-  connection: network_cli
+  connection: local
   tasks:
     - name: Gather information about IP interfaces
       ios_command:
