@@ -1,0 +1,232 @@
+---
+- name: CSR / IOS-XE RESTCONF Inventory
+  hosts: localhost
+  gather_facts: no
+
+  vars:
+    # --- Device connection details ---
+    router_host: "192.168.56.101"     # CSR IP
+    rest_username: "cisco"
+    rest_password: "cisco123!"
+    validate_certs: false
+    base_url_scheme: "https"
+    base_url_port: 443
+
+    # --- Derived values ---
+    base_url: "{{ base_url_scheme }}://{{ router_host }}:{{ base_url_port }}/restconf/data"
+    headers:
+      Accept: "application/yang-data+json"
+      Content-Type: "application/yang-data+json"
+
+  tasks:
+    - name: [1] Get hostname (native)
+      uri:
+        url: "{{ base_url }}/Cisco-IOS-XE-native:native/hostname"
+        method: GET
+        headers: "{{ headers }}"
+        url_username: "{{ rest_username }}"
+        url_password: "{{ rest_password }}"
+        force_basic_auth: yes
+        validate_certs: "{{ validate_certs }}"
+        return_content: yes
+        status_code: [200,204,404]
+      register: hostname_resp
+
+    - name: Extract hostname
+      set_fact:
+        device_hostname: >-
+          {{ (hostname_resp.json['Cisco-IOS-XE-native:hostname'])
+             if (hostname_resp.status == 200 and
+                 'Cisco-IOS-XE-native:hostname' in hostname_resp.json)
+             else 'N/A' }}
+
+    - name: [2] Platform / Version
+      uri:
+        url: "{{ base_url }}/Cisco-IOS-XE-platform-software-oper:platform-software-version"
+        method: GET
+        headers: "{{ headers }}"
+        url_username: "{{ rest_username }}"
+        url_password: "{{ rest_password }}"
+        force_basic_auth: yes
+        validate_certs: "{{ validate_certs }}"
+        return_content: yes
+        status_code: [200,204,404]
+      register: version_resp
+
+    - name: Extract platform/version
+      set_fact:
+        platform_info: >-
+          {{ version_resp.json['Cisco-IOS-XE-platform-software-oper:platform-software-version']
+             if (version_resp.status == 200 and
+                 'Cisco-IOS-XE-platform-software-oper:platform-software-version' in version_resp.json)
+             else {} }}
+        device_platform: "{{ platform_info.get('platform','unknown') }}"
+        device_version:  "{{ platform_info.get('version','N/A') }}"
+
+    - name: [3] Hardware inventory (components)
+      uri:
+        url: "{{ base_url }}/Cisco-IOS-XE-platform-oper:components"
+        method: GET
+        headers: "{{ headers }}"
+        url_username: "{{ rest_username }}"
+        url_password: "{{ rest_password }}"
+        force_basic_auth: yes
+        validate_certs: "{{ validate_certs }}"
+        return_content: yes
+        status_code: [200,204,404]
+      register: inv_resp
+
+    - name: Extract components list
+      set_fact:
+        hw_components: >-
+          {{ inv_resp.json['Cisco-IOS-XE-platform-oper:components'].get('component', [])
+             if (inv_resp.status == 200 and
+                 'Cisco-IOS-XE-platform-oper:components' in inv_resp.json)
+             else [] }}
+
+    - name: [4] Interfaces (ietf-interfaces)
+      uri:
+        url: "{{ base_url }}/ietf-interfaces:interfaces/interface"
+        method: GET
+        headers: "{{ headers }}"
+        url_username: "{{ rest_username }}"
+        url_password: "{{ rest_password }}"
+        force_basic_auth: yes
+        validate_certs: "{{ validate_certs }}"
+        return_content: yes
+        status_code: [200,204,404]
+      register: if_resp
+
+    - name: Extract interface list
+      set_fact:
+        interfaces: >-
+          {{ if_resp.json['ietf-interfaces:interface']
+             if (if_resp.status == 200 and 'ietf-interfaces:interface' in if_resp.json)
+             else [] }}
+
+    - name: [5] OSPF (oper data)
+      uri:
+        url: "{{ base_url }}/Cisco-IOS-XE-ospf-oper:ospf-oper-data"
+        method: GET
+        headers: "{{ headers }}"
+        url_username: "{{ rest_username }}"
+        url_password: "{{ rest_password }}"
+        force_basic_auth: yes
+        validate_certs: "{{ validate_certs }}"
+        return_content: yes
+        status_code: [200,204,404]
+      register: ospf_resp
+
+    - name: Extract OSPF processes
+      set_fact:
+        ospf_processes: >-
+          {{ ospf_resp.json['Cisco-IOS-XE-ospf-oper:ospf-oper-data'].get('ospf-processes', [])
+             if (ospf_resp.status == 200 and
+                 'Cisco-IOS-XE-ospf-oper:ospf-oper-data' in ospf_resp.json)
+             else [] }}
+
+    - name: [6] CDP neighbors
+      uri:
+        url: "{{ base_url }}/Cisco-IOS-XE-cdp-oper:cdp-neighbor-details"
+        method: GET
+        headers: "{{ headers }}"
+        url_username: "{{ rest_username }}"
+        url_password: "{{ rest_password }}"
+        force_basic_auth: yes
+        validate_certs: "{{ validate_certs }}"
+        return_content: yes
+        status_code: [200,204,404]
+      register: cdp_resp
+
+    - name: Extract CDP neighbors
+      set_fact:
+        cdp_neighbors: >-
+          {{ cdp_resp.json['Cisco-IOS-XE-cdp-oper:cdp-neighbor-details'].get('cdp-neighbor-detail', [])
+             if (cdp_resp.status == 200 and
+                 'Cisco-IOS-XE-cdp-oper:cdp-neighbor-details' in cdp_resp.json)
+             else [] }}
+
+    - name: [7] LLDP neighbors
+      uri:
+        url: "{{ base_url }}/Cisco-IOS-XE-lldp-oper:lldp-entries"
+        method: GET
+        headers: "{{ headers }}"
+        url_username: "{{ rest_username }}"
+        url_password: "{{ rest_password }}"
+        force_basic_auth: yes
+        validate_certs: "{{ validate_certs }}"
+        return_content: yes
+        status_code: [200,204,404]
+      register: lldp_resp
+
+    - name: Extract LLDP neighbors
+      set_fact:
+        lldp_neighbors: >-
+          {{ lldp_resp.json['Cisco-IOS-XE-lldp-oper:lldp-entries'].get('lldp-entry', [])
+             if (lldp_resp.status == 200 and
+                 'Cisco-IOS-XE-lldp-oper:lldp-entries' in lldp_resp.json)
+             else [] }}
+
+    - name: Print formatted summary
+      debug:
+        msg: |
+          === CSR / IOS-XE RESTCONF Inventory Report ===
+
+          Hostname: {{ device_hostname }}
+          Platform: {{ device_platform }}
+          Version : {{ device_version }}
+
+          -- Hardware Inventory --
+          {% if hw_components|length == 0 %}
+          (no hardware data or not supported)
+          {% else %}
+          {% for c in hw_components %}
+          - {{ c.name | default('N/A') }}: {{ c['description'] | default('') }}
+            Model={{ c['model-name'] | default('') }}  SN={{ c['serial-number'] | default('') }}
+          {% endfor %}
+          {% endif %}
+
+          -- Interfaces --
+          {% if interfaces|length == 0 %}
+          (no interfaces or not supported)
+          {% else %}
+          {% for i in interfaces %}
+          - {{ i.name }} : {{ i.description | default('no description') }}
+            IPs: {{
+              (i['ietf-ip:ipv4'].address | map(attribute='ip') | join(', '))
+              if (i['ietf-ip:ipv4'] is defined and i['ietf-ip:ipv4'].address is defined)
+              else 'no IP'
+            }}
+          {% endfor %}
+          {% endif %}
+
+          -- OSPF --
+          {% if ospf_processes|length == 0 %}
+          (no OSPF data or not supported)
+          {% else %}
+          {% for p in ospf_processes %}
+          - Process {{ p['process-id'] | default('N/A') }}
+            Router-ID: {{ p['router-id'] | default('N/A') }}
+            Areas: {{
+              p.get('ospf-area', []) | map(attribute='area-id') | list
+            }}
+          {% endfor %}
+          {% endif %}
+
+          -- Neighbors (CDP) --
+          {% if cdp_neighbors|length == 0 %}
+          (none or not supported)
+          {% else %}
+          {% for n in cdp_neighbors %}
+          - {{ n['device-id'] | default('unknown') }} via {{ n['local-intf-name'] | default('?') }} ({{ n['port-id'] | default('?') }})
+          {% endfor %}
+          {% endif %}
+
+          -- Neighbors (LLDP) --
+          {% if lldp_neighbors|length == 0 %}
+          (none or not supported)
+          {% else %}
+          {% for n in lldp_neighbors %}
+          - {{ n['device-id'] | default('unknown') }} via {{ n['local-intf-name'] | default('?') }}
+          {% endfor %}
+          {% endif %}
