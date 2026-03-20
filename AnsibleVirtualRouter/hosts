@@ -9,6 +9,7 @@ ansible_network_os=cisco.ios.ios
 ansible_become=true
 ansible_become_method=enable
 ansible_become_password=cisco123!
+loopback_ip=10.10.100.200
 
 [csr]
 CSR1kv ansible_host=192.168.56.101 

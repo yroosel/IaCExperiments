@@ -1,0 +1,14 @@
+--- 
+- name: Show interfaces 
+  hosts: routers 
+  connection: network_cli  
+  tasks:  
+    - name: use ios commands  
+      ios_command: 
+        commands:  
+          - show ip interface brief
+      register: output
+    - name: format output
+      debug:
+        msg: "{{ output.stdout_lines }}"
+  
