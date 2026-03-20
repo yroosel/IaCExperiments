@@ -1,8 +1,26 @@
 [routers]
-CSR1kv ansible_host=192.168.56.101 ansible_user=cisco ansible_password=cisco123! enable_password=cisco123! ansible_network_os=ios  
+CSR1kv ansible_host=192.168.56.101
+
+[routers:vars]
+ansible_user=cisco
+ansible_password=cisco123!
+ansible_connection=ansible.netcommon.network_cli
+ansible_network_os=cisco.ios.ios
+ansible_become=true
+ansible_become_method=enable
+ansible_become_password=cisco123!
 
 [csr]
-CSR1kv ansible_host=192.168.56.101 ansible_user=cisco ansible_password=cisco123! enable_password=cisco123! ansible_network_os=ios
+CSR1kv ansible_host=192.168.56.101 
+
+[csr:vars]
+ansible_user=cisco
+ansible_password=cisco123!
+ansible_connection=ansible.netcommon.network_cli
+ansible_network_os=cisco.ios.ios
+ansible_become=true
+ansible_become_method=enable
+ansible_become_password=cisco123!
 
 [sandbox]
 iosxe ansible_host=sandbox-iosxe-recomm-1.cisco.com ansible_user=developer ansible_password=C1sco12345 ansible_port=22

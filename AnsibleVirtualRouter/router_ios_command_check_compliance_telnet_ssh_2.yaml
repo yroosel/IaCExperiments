@@ -1,0 +1,30 @@
+---
+- name: Cisco IOS Compliance verification
+  hosts: routers
+  gather_facts: no
+  connection: network_cli
+
+  tasks:
+    - name: Check for Telnet enabled on vty lines
+      ios_command: 
+        commands: show running-config | section line vty
+      register: vty_config
+
+    - name: Report if Telnet is found
+      debug: 
+        msg: "NON-COMPLIANT: Telnet is enabled on device"
+      when: "'telnet' in vty_config.stdout[0]"
+
+    - name: Check SSH version
+      ios_command:
+        commands: show ip ssh
+      register: ssh_status
+
+    - name: Report non-compliant SSH version
+      debug: 
+        msg: "NON-COMPLIANT: SSH v2 is not compliant on device"
+      when: "'version 2' not in ssh_status.stdout[0]"
+
+
+      
+

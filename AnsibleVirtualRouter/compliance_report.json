@@ -1,0 +1,14 @@
+[
+    {
+        "check": "SSH Version",
+        "details": "SSH v2 not enforced",
+        "host": "CSR1kv",
+        "status": "NON-COMPLIANT"
+    },
+    {
+        "check": "AAA Configuration",
+        "details": "AAA not configured",
+        "host": "CSR1kv",
+        "status": "NON-COMPLIANT"
+    }
+]

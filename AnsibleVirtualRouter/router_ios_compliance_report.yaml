@@ -1,0 +1,49 @@
+---
+- name: Cisco IOS compliance verification
+  hosts: routers
+  gather_facts: no
+  connection: network_cli
+
+  vars: 
+    compliance_report: []
+
+  tasks:
+    - name: Check for Telnet enabled on vty lines
+      ios_command: 
+        commands: show running-config | section line vty
+      register: vty_config
+      
+    - name: Report if telnet is found
+      set_fact:
+        compliance_report: "{{ compliance_report + [ { 'host': inventory_hostname, 'check': 'Telnet Disabled', 'status': 'NON-COMPLIANT', 'details': 'Telnet is enabled on VTY lines' } ] }}"
+      when: "'telnet' in vty_config.stdout[0]"
+
+    
+    - name: Check SSH version
+      ios_command:
+        commands: show ip ssh
+      register: ssh_status
+    
+    - name: Report non-compliant SSH version
+      set_fact:
+        compliance_report: "{{ compliance_report + [ { 'host': inventory_hostname, 'check': 'SSH Version', 'status': 'NON-COMPLIANT', 'details': 'SSH v2 not enforced' } ] }}"
+      when: "'version 2' not in ssh_status.stdout[0]"
+
+
+    - name: Check AAA configuration
+      ios_command:
+        commands: show running-config | section aaa
+      register: aaa_config
+
+    - name: Report if AAA is missing
+      set_fact:
+        compliance_report: "{{ compliance_report + [ { 'host': inventory_hostname, 'check': 'AAA Configuration', 'status': 'NON-COMPLIANT', 'details': 'AAA not configured' } ] }}"
+      when: aaa_config.stdout[0] == "no aaa new-model"
+  
+    - name: Save compliance report to file
+      local_action:
+        module: copy
+        content: "{{ compliance_report | to_nice_json }}"
+        dest: "./compliance_report.json"
+
+    

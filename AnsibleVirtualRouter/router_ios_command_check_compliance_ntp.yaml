@@ -1,0 +1,22 @@
+- name: Check compliance of NTP servers
+  hosts: routers
+  become: yes
+  connection: network_cli
+  gather_facts: no
+
+  vars:
+    ansible_network_os: cisco.ios.ios
+
+  tasks:
+    - name: Get NTP config
+      cisco.ios.ios_command:
+        commands:
+          - "show running-config | include ntp server"
+      register: ntp_config
+
+    - name: Assert correct NTP server
+      ansible.builtin.assert:
+        that:
+          - "'ntp server 192.0.2.10' in ntp_config.stdout[0]"
+        fail_msg: "NTP server is not compliant"
+        success_msg: "NTP server is compliant"
