@@ -1,0 +1,41 @@
+- name: Compare current IOS-XE configuration with baseline
+  hosts: routers
+  gather_facts: no
+  connection: network_cli
+
+  vars:
+    intended_config_path: "baselines/{{ inventory_hostname }}-baseline.conf"
+
+  tasks:
+    - name: Get running-config
+      cisco.ios.ios_command:
+        commands:
+          - "show running-config"
+      register: running
+
+    - name: Load baseline config
+      ansible.builtin.set_fact:
+        intended_raw: "{{ lookup('file', intended_config_path) }}"
+
+    - name: Compare configurations
+      ansible.utils.fact_diff:
+        before: "{{ intended_raw }}"
+        after: "{{ running.stdout[0] }}"
+        plugin:
+          vars:
+            skip_lines:
+              - '^Building configuration.*'
+              - '^Current configuration.*'
+              - '^!.*'
+      register: diff_result
+      delegate_to: localhost
+
+    - name: Save diff to file
+      ansible.builtin.copy:
+        content: "{{ diff_result.diff_text }}"
+        dest: "diffs/{{ inventory_hostname }}-diff.txt"
+      delegate_to: localhost
+
+    - name: Show diff
+      ansible.builtin.debug:
+        var: diff_result.diff_text

@@ -1,0 +1,85 @@
+{
+    "ansible_facts": {
+        "ansible_net_all_ipv4_addresses": [
+            "192.168.56.101",
+            "10.19.11.1"
+        ],
+        "ansible_net_all_ipv6_addresses": [],
+        "ansible_net_api": "cliconf",
+        "ansible_net_cpu_utilization": {
+            "core": {
+                "five_minutes": 0,
+                "five_seconds": 0,
+                "five_seconds_interrupt": 0,
+                "one_minute": 0
+            }
+        },
+        "ansible_net_filesystems": [
+            "bootflash:"
+        ],
+        "ansible_net_filesystems_info": {
+            "bootflash:": {
+                "spacefree_kb": 6368104.0,
+                "spacetotal_kb": 7712692.0
+            }
+        },
+        "ansible_net_gather_network_resources": [],
+        "ansible_net_gather_subset": [
+            "interfaces",
+            "hardware",
+            "default"
+        ],
+        "ansible_net_hostname": "CSR1kv",
+        "ansible_net_image": "bootflash:packages.conf",
+        "ansible_net_interfaces": {
+            "GigabitEthernet1": {
+                "bandwidth": 1000000,
+                "description": "Connected Interface required",
+                "duplex": "Full",
+                "ipv4": [
+                    {
+                        "address": "192.168.56.101",
+                        "subnet": "24"
+                    }
+                ],
+                "lineprotocol": "up",
+                "macaddress": "0800.2743.11b6",
+                "mediatype": "Virtual",
+                "mtu": 1500,
+                "operstatus": "up",
+                "type": "CSR vNIC"
+            },
+            "Loopback1911": {
+                "bandwidth": 8000000,
+                "description": "Loopback interface created with Ansible",
+                "duplex": null,
+                "ipv4": [
+                    {
+                        "address": "10.19.11.1",
+                        "subnet": "32"
+                    }
+                ],
+                "lineprotocol": "up",
+                "macaddress": null,
+                "mediatype": null,
+                "mtu": 1514,
+                "operstatus": "up",
+                "type": null
+            }
+        },
+        "ansible_net_iostype": "IOS-XE",
+        "ansible_net_memfree_mb": 1821.200969696045,
+        "ansible_net_memtotal_mb": 2130.972785949707,
+        "ansible_net_model": "CSR1000V",
+        "ansible_net_neighbors": {},
+        "ansible_net_operatingmode": "controller",
+        "ansible_net_python_version": "3.8.2",
+        "ansible_net_serialnum": "9ZN02OH8R0C",
+        "ansible_net_system": "ios",
+        "ansible_net_version": "16.09.05",
+        "ansible_network_resources": {},
+        "discovered_interpreter_python": "/usr/bin/python3"
+    },
+    "changed": false,
+    "failed": false
+}

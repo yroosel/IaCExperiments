@@ -1,0 +1,13 @@
+--- before
++++ after
+@@ -57,9 +57,6 @@
+ restconf
+ username cisco privilege 15 password 0 cisco123!
+ redundancy
+-interface Loopback1911
+- description Loopback interface created with Ansible
+- ip address 10.19.11.1 255.255.255.255
+ interface GigabitEthernet1
+  description Connected Interface required
+  ip address 192.168.56.101 255.255.255.0
+

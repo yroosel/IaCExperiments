@@ -1,0 +1,21 @@
+- name: Save current IOS-XE running configuration to file
+  hosts: routers
+  gather_facts: no
+  connection: network_cli
+
+  vars:
+    backup_config_path: "backups/{{ inventory_hostname }}-running.conf"
+
+  tasks:
+    - name: Get running-config
+      cisco.ios.ios_command:
+        commands:
+          - "show running-config"
+      register: running
+
+    - name: Save running-config to file
+      ansible.builtin.copy:
+        content: "{{ running.stdout[0] }}"
+        dest: "{{ backup_config_path }}"
+      delegate_to: localhost
+  
