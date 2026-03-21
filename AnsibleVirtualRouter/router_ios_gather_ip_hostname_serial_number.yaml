@@ -1,0 +1,24 @@
+- name: Gather structured facts from Cisco IOS XE router
+  hosts: csr
+  gather_facts: no
+  connection: ansible.netcommon.network_cli
+
+  tasks:
+    - name: Gather hardware and interface facts
+      cisco.ios.ios_facts:
+        gather_subset:
+          - hardware
+          - interfaces
+      register: ios_facts
+
+    - name: Show hostname
+      ansible.builtin.debug:
+        var: ios_facts.ansible_facts.ansible_net_hostname
+
+    - name: Show serial number
+      ansible.builtin.debug:
+        var: ios_facts.ansible_facts.ansible_net_serialnum
+
+    - name: Show interface information
+      ansible.builtin.debug:
+        var: ios_facts.ansible_facts.ansible_net_interfaces

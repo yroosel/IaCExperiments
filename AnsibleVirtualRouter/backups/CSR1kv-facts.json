@@ -19,14 +19,14 @@
         ],
         "ansible_net_filesystems_info": {
             "bootflash:": {
-                "spacefree_kb": 6368104.0,
+                "spacefree_kb": 6367752.0,
                 "spacetotal_kb": 7712692.0
             }
         },
         "ansible_net_gather_network_resources": [],
         "ansible_net_gather_subset": [
-            "interfaces",
             "hardware",
+            "interfaces",
             "default"
         ],
         "ansible_net_hostname": "CSR1kv",
@@ -68,7 +68,7 @@
             }
         },
         "ansible_net_iostype": "IOS-XE",
-        "ansible_net_memfree_mb": 1821.200969696045,
+        "ansible_net_memfree_mb": 1821.251796722412,
         "ansible_net_memtotal_mb": 2130.972785949707,
         "ansible_net_model": "CSR1000V",
         "ansible_net_neighbors": {},
