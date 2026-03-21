@@ -1,0 +1,20 @@
+---
+- name: Gather hostname and serial number from Cisco IOS device
+  hosts: routers
+  gather_facts: no
+  connection: ansible.netcommon.network_cli
+
+  tasks:
+    - name: Gather hardware and interface facts
+      cisco.ios.ios_facts:
+        gather_subset:
+          - hardware
+      register: ios_facts
+
+    - name: Show hostname
+      ansible.builtin.debug:
+        var: ios_facts.ansible_facts.ansible_net_hostname
+
+    - name: Show serial number
+      ansible.builtin.debug:
+        var: ios_facts.ansible_facts.ansible_net_serialnum
