@@ -1,5 +1,5 @@
 - name: Gather structured facts from Cisco IOS XE router
-  hosts: csr
+  hosts: routers
   gather_facts: no
   connection: ansible.netcommon.network_cli
 
