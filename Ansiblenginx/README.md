@@ -1,6 +1,6 @@
 # Ansible Nginx Lab – Cisco CML
 
-This lab demonstrates how to use **Ansible** to install, configure, verify, and remove an Nginx web server on **Tiny Core Linux 17.0**, running inside Cisco Modeling Labs (CML).
+This lab demonstrates how to use **Ansible** to install, configure, verify, and remove an Nginx web server on **Tiny Core Linux 17.0**, running inside Cisco Modeling Labs (CML). Replace username and password.
 
 ## 1. Lab Environment
 
