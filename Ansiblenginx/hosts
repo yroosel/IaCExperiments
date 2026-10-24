@@ -1,0 +1,8 @@
+[tiny]
+10.123.0.3 ansible_ssh_user=cisco ansible_ssh_pass=cisco
+
+[linux_servers]
+tinycore ansible_host=192.168.0.201 ansible_port=2222 ansible_user=cisco ansible_python_interpreter=/usr/local/bin/python3
+
+[servers:children]
+linux_servers

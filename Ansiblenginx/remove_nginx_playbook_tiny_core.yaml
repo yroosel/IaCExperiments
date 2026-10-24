@@ -1,0 +1,54 @@
+
+---
+- name: Remove Nginx from Tiny Core Linux
+  hosts: linux_servers
+  gather_facts: yes
+  become: no
+
+  tasks:
+    - name: Check whether Nginx is running
+      shell: pgrep -x nginx
+      register: nginx_running
+      changed_when: false
+      failed_when: false
+
+    - name: Stop Nginx
+      become: yes
+      command: /usr/local/sbin/nginx -s stop
+      when: nginx_running.rc == 0
+
+    - name: Remove Nginx from boot-time extension list
+      become: yes
+      lineinfile:
+        path: /etc/sysconfig/tcedir/onboot.lst
+        regexp: '^nginx(\.tcz)?$'
+        state: absent
+      when: nginx_running.rc is defined
+
+    - name: Remove Nginx configuration
+      become: yes
+      file:
+        path: /usr/local/etc/nginx/nginx.conf
+        state: absent
+
+    - name: Remove Nginx MIME types configuration
+      become: yes
+      file:
+        path: /usr/local/etc/nginx/mime.types
+        state: absent
+
+    - name: Remove Nginx web page
+      become: yes
+      file:
+        path: /var/www/html/index.html
+        state: absent
+
+    - name: Remove Nginx logs
+      become: yes
+      file:
+        path: /var/log/nginx
+        state: absent
+
+    - name: Report removal status
+      debug:
+        msg: "Nginx stopped and its lab configuration removed. Reboot Tiny Core to unload the extension."

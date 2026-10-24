@@ -1,0 +1,166 @@
+
+---
+- name: Install and configure Nginx on Tiny Core Linux
+  hosts: linux_servers
+  gather_facts: yes
+  become: no
+
+  tasks:
+
+    - name: Check installed Tiny Core extensions
+      command: tce-status -i
+      register: installed_extensions
+      changed_when: false
+
+    - name: Install PCRE2 dependency
+      command: tce-load -wi pcre2
+      when: "'pcre2' not in installed_extensions.stdout_lines"
+
+    - name: Install Nginx extension
+      command: tce-load -wi nginx
+      when: "'nginx' not in installed_extensions.stdout_lines"
+
+    - name: Create Nginx configuration directory
+      become: yes
+      file:
+        path: /usr/local/etc/nginx
+        state: directory
+        mode: '0755'
+
+    - name: Install MIME types configuration
+      become: yes
+      copy:
+        src: /usr/local/etc/nginx/original/mime.types.default
+        dest: /usr/local/etc/nginx/mime.types
+        remote_src: yes
+        force: no
+
+    - name: Create Nginx log directory
+      become: yes
+      file:
+        path: /var/log/nginx
+        state: directory
+        mode: '0755'
+
+    - name: Create web document root
+      become: yes
+      file:
+        path: /var/www/html
+        state: directory
+        mode: '0755'
+
+    - name: Get current date and time on Tiny Core
+      command: date "+%Y-%m-%d %H:%M:%S %Z"
+      register: homepage_creation_time
+      changed_when: false
+
+    - name: Create test web page
+      become: yes
+      copy:
+        dest: /var/www/html/index.html
+        mode: '0644'
+        force: no
+        content: |
+          <!DOCTYPE html>
+          <html>
+          <head>
+            <title>Cisco CML Nginx Lab</title>
+          </head>
+          <body>
+            <h1>Welcome to Cisco CML</h1>
+            <p>Nginx on Tiny Core Linux, configured with Ansible.</p>
+            <p>Page created: {{ homepage_creation_time.stdout }}</p>
+          </body>
+          </html>
+
+    - name: Install Nginx configuration
+      become: yes
+      copy:
+        dest: /usr/local/etc/nginx/nginx.conf
+        mode: '0644'
+        content: |
+          user nobody nogroup;
+          worker_processes 1;
+
+          error_log /var/log/nginx/error.log;
+          pid /var/run/nginx.pid;
+
+          events {
+              worker_connections 1024;
+          }
+
+          http {
+              include /usr/local/etc/nginx/mime.types;
+              default_type application/octet-stream;
+
+              access_log /var/log/nginx/access.log;
+              sendfile on;
+              keepalive_timeout 65;
+
+              server {
+                  listen 80;
+                  server_name localhost;
+
+                  root /var/www/html;
+                  index index.html index.htm;
+
+                  location / {
+                      try_files $uri $uri/ =404;
+                  }
+              }
+          }
+      register: nginx_config
+
+    - name: Validate Nginx configuration
+      become: yes
+      command: /usr/local/sbin/nginx -t
+      changed_when: false
+
+    - name: Check whether Nginx is running
+      shell: "ps | grep '[n]ginx: master process'"
+      register: nginx_running
+      changed_when: false
+      failed_when: false
+
+    - name: Check whether port 80 is listening
+      shell: "netstat -tln | grep -E '(^|[[:space:]])[^[:space:]]*:80[[:space:]]'"
+      register: port80_status
+      changed_when: false
+      failed_when: false
+
+    - name: Fail if another service occupies port 80
+      fail:
+        msg: "Port 80 is occupied, but no Nginx master process was detected."
+      when:
+        - nginx_running.rc != 0
+        - port80_status.rc == 0
+
+    - name: Start Nginx if not running
+      become: yes
+      command: /usr/local/sbin/nginx
+      when:
+        - nginx_running.rc != 0
+        - port80_status.rc != 0
+
+    - name: Reload Nginx when configuration changes
+      become: yes
+      command: /usr/local/sbin/nginx -s reload
+      when:
+        - nginx_running.rc == 0
+        - nginx_config.changed
+
+    - name: Verify HTTP response
+      uri:
+        url: http://127.0.0.1/
+        status_code: 200
+        return_content: yes
+      register: nginx_http
+      retries: 3
+      delay: 2
+      until:
+        - nginx_http.status == 200
+        - "'Welcome to Cisco CML' in nginx_http.content"
+
+    - name: Display verification result
+      debug:
+        msg: "Nginx is running on {{ inventory_hostname }} - HTTP {{ nginx_http.status }}"
