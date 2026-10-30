@@ -1,12 +1,15 @@
 ---
 - name: Gather information about IP interfaces
-  hosts: csr
-  gather_facts: no
-  connection: network_cli 
+  hosts: router-1
+  gather_facts: false
+  
   tasks:
     - name: Gather IOS facts
-      ios_facts:
+      cisco.ios.ios_facts:
+        gather_subset:
+          - interfaces
       register: ios_facts_result
+
     - name: Display IP interface information
-      debug:
+      ansible.builtin.debug:
         var: ios_facts_result.ansible_facts.ansible_net_interfaces

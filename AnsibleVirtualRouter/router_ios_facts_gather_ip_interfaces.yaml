@@ -1,6 +1,6 @@
 ---
 - name: Gather information about IP interfaces on CSR1Kv
-  hosts: routers
+  hosts: cml
   gather_facts: yes
   connection: network_cli
   tasks:

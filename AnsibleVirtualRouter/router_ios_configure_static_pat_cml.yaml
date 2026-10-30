@@ -1,0 +1,80 @@
+
+---
+- name: Configure Static PAT on CML Router-1
+  hosts: cml
+  gather_facts: false
+
+  vars:
+    outside_interface: Ethernet0/0
+    inside_interface: Ethernet0/1
+
+    pat_hosts:
+      - name: server
+        ip: 10.123.0.251
+        ssh_port: 2222
+        http_port: 8081
+        https_port: 8441
+
+      - name: client1
+        ip: 10.123.0.252
+        ssh_port: 2223
+        http_port: 8082
+        https_port: 8442
+
+      - name: ubuntu1
+        ip: 10.123.0.253
+        ssh_port: 2224
+        http_port: 8083
+        https_port: 8443
+
+  tasks:
+    - name: Configure outside NAT interface
+      cisco.ios.ios_config:
+        parents: "interface {{ outside_interface }}"
+        lines:
+          - ip nat outside
+
+    - name: Configure inside NAT interface
+      cisco.ios.ios_config:
+        parents: "interface {{ inside_interface }}"
+        lines:
+          - ip nat inside
+
+    - name: Configure Static PAT for SSH
+      cisco.ios.ios_config:
+        lines:
+          - "ip nat inside source static tcp {{ item.ip }} 22 interface {{ outside_interface }} {{ item.ssh_port }}"
+      loop: "{{ pat_hosts }}"
+      loop_control:
+        label: "{{ item.name }} SSH"
+
+    - name: Configure Static PAT for HTTP
+      cisco.ios.ios_config:
+        lines:
+          - "ip nat inside source static tcp {{ item.ip }} 80 interface {{ outside_interface }} {{ item.http_port }}"
+      loop: "{{ pat_hosts }}"
+      loop_control:
+        label: "{{ item.name }} HTTP"
+
+    - name: Configure Static PAT for HTTPS
+      cisco.ios.ios_config:
+        lines:
+          - "ip nat inside source static tcp {{ item.ip }} 443 interface {{ outside_interface }} {{ item.https_port }}"
+      loop: "{{ pat_hosts }}"
+      loop_control:
+        label: "{{ item.name }} HTTPS"
+
+    - name: Save configuration
+      cisco.ios.ios_config:
+        save_when: modified
+
+    - name: Show NAT translations
+      cisco.ios.ios_command:
+        commands:
+          - show ip nat translations
+          - show ip nat statistics
+      register: nat_output
+
+    - name: Display NAT verification
+      ansible.builtin.debug:
+        var: nat_output.stdout_lines

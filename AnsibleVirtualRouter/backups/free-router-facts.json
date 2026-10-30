@@ -1,0 +1,119 @@
+{
+    "ansible_facts": {
+        "ansible_net_all_ipv4_addresses": [
+            "192.168.0.228",
+            "10.123.0.1"
+        ],
+        "ansible_net_all_ipv6_addresses": [],
+        "ansible_net_api": "cliconf",
+        "ansible_net_cpu_utilization": {
+            "core": {
+                "five_minutes": 0,
+                "five_seconds": 0,
+                "five_seconds_interrupt": 0,
+                "one_minute": 0
+            }
+        },
+        "ansible_net_filesystems": [
+            "unix:"
+        ],
+        "ansible_net_filesystems_info": {
+            "unix:": {
+                "spacefree_kb": 2097148.0,
+                "spacetotal_kb": 2097148.0
+            }
+        },
+        "ansible_net_gather_network_resources": [],
+        "ansible_net_gather_subset": [
+            "interfaces",
+            "default",
+            "hardware"
+        ],
+        "ansible_net_hostname": "router-1",
+        "ansible_net_image": "unix:/binary.iol",
+        "ansible_net_interfaces": {
+            "Ethernet0/0": {
+                "bandwidth": 10000,
+                "description": "EXTERNAL - 10.10.20.0/24",
+                "duplex": null,
+                "ipv4": [
+                    {
+                        "address": "192.168.0.228",
+                        "subnet": "24"
+                    }
+                ],
+                "lineprotocol": "up",
+                "macaddress": "aabb.cc00.0500",
+                "mediatype": null,
+                "mtu": 1500,
+                "operstatus": "up",
+                "type": "AmdP2"
+            },
+            "Ethernet0/1": {
+                "bandwidth": 10000,
+                "description": "INTERNAL - SW2 - 10.123.0.0/24",
+                "duplex": null,
+                "ipv4": [
+                    {
+                        "address": "10.123.0.1",
+                        "subnet": "24"
+                    }
+                ],
+                "lineprotocol": "up",
+                "macaddress": "aabb.cc00.0510",
+                "mediatype": null,
+                "mtu": 1500,
+                "operstatus": "up",
+                "type": "AmdP2"
+            },
+            "Ethernet0/2": {
+                "bandwidth": 10000,
+                "description": null,
+                "duplex": null,
+                "ipv4": [],
+                "lineprotocol": "down",
+                "macaddress": "aabb.cc00.0520",
+                "mediatype": null,
+                "mtu": 1500,
+                "operstatus": "administratively down",
+                "type": "AmdP2"
+            },
+            "Ethernet0/3": {
+                "bandwidth": 10000,
+                "description": null,
+                "duplex": null,
+                "ipv4": [],
+                "lineprotocol": "down",
+                "macaddress": "aabb.cc00.0530",
+                "mediatype": null,
+                "mtu": 1500,
+                "operstatus": "administratively down",
+                "type": "AmdP2"
+            }
+        },
+        "ansible_net_iostype": "IOS",
+        "ansible_net_memfree_mb": 648.1056365966797,
+        "ansible_net_memtotal_mb": 779.9440765380859,
+        "ansible_net_neighbors": {
+            "Ethernet0/1": [
+                {
+                    "host": "SW2.cml.local",
+                    "ip": "10.123.0.251",
+                    "platform": "Linux Unix",
+                    "port": "Ethernet0/0"
+                }
+            ]
+        },
+        "ansible_net_operatingmode": "autonomous",
+        "ansible_net_python_version": "3.14.4",
+        "ansible_net_serialnum": "2039813",
+        "ansible_net_system": "ios",
+        "ansible_net_version": "17.18.2",
+        "ansible_network_resources": {}
+    },
+    "changed": false,
+    "failed": false,
+    "warnings": [
+        "ansible-pylibssh not installed, falling back to paramiko"
+    ]
+}

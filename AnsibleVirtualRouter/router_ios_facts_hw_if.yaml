@@ -1,6 +1,6 @@
 ---
 - name: Collect selected facts from IOS XE device
-  hosts: routers
+  hosts: cml
   connection: network_cli
   gather_facts: no
 

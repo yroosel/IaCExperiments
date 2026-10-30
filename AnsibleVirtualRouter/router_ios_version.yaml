@@ -1,8 +1,8 @@
 ---
 - name: DISCOVER IOS VERSION 
-  hosts: csr
+  hosts: cml
   gather_facts: False
-  connection: local
+  connection: network_cli
  
   tasks:
   - name: run show version on remote devices
@@ -26,4 +26,4 @@
         - show interfaces
       wait_for:
         - result[0] contains IOS
-        - result[1] contains Loopback
+        - result[1] contains Ethernet
